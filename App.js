@@ -8,6 +8,7 @@ import {
   FlatList,
 } from "react-native";
 import Header from "./components/Header";
+import ListItem from "./components/ListItem";
 import "react-native-get-random-values";
 import { v4 as uuid } from "uuid";
 
@@ -19,12 +20,20 @@ const App = () => {
     { id: uuid(), text: "Juice" },
   ]);
 
+  const deleteItem = (id) => {
+    setItems((prevItems) => {
+      return prevItems.filter((item) => item.id != id);
+    });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Header title={"Shopping List"} />
       <FlatList
         data={items}
-        renderItem={({ item }) => <Text>{item.text}</Text>}
+        renderItem={({ item }) => (
+          <ListItem item={item} deleteItem={deleteItem} />
+        )}
       />
     </SafeAreaView>
   );
